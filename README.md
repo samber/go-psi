@@ -62,7 +62,8 @@ for {
 ```go
 import "github.com/samber/go-psi"
 
-onAlert, done, err := psi.NotifyStarvation(psi.CPU, psi.Avg10, 3, 4)
+// Alert starts when CPU 10s average go further 90% and stops when CPU goes below 70%.
+onAlert, done, err := psi.NotifyStarvation(psi.CPU, psi.Avg10, 70, 90)
 for {
     alert, _ := <-onAlert
     fmt.Printf("\nALERT %t\nCPU: %f%%\n", alert.Starved, alert.Current)
