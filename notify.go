@@ -12,7 +12,7 @@ import (
 const PollingInterval = 100 * time.Millisecond
 
 // Notify notify callers when PSI stats change.
-func Notify(resource Resource) (<-chan PSIStats, <-chan struct{}, error) {
+func Notify(resource Resource) (<-chan PSIStats, chan<- struct{}, error) {
 	ticker := time.NewTicker(PollingInterval)
 
 	var last PSIStats
@@ -61,7 +61,7 @@ type StarvationAlert struct {
 
 // NotifyStarvation notify callers when a resource is starved. Starvation is enabled when the metric
 // is above the high threshold and disabled when the metric is below the low threshold.
-func NotifyStarvation(resource Resource, metric Metric, lowThreshold int, highThreshold int) (<-chan StarvationAlert, <-chan struct{}, error) {
+func NotifyStarvation(resource Resource, metric Metric, lowThreshold int, highThreshold int) (<-chan StarvationAlert, chan<- struct{}, error) {
 	statsIn, doneIn, err := Notify(resource)
 	if err != nil {
 		return nil, nil, err
@@ -75,8 +75,8 @@ func NotifyStarvation(resource Resource, metric Metric, lowThreshold int, highTh
 	go func() {
 		for {
 			select {
-			case <-doneIn:
-				doneOut <- struct{}{}
+			case <-doneOut:
+				doneIn <- struct{}{}
 				close(alerts)
 				close(doneOut)
 				return

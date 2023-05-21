@@ -21,5 +21,5 @@ func main() {
 		fmt.Printf("\nALERT %t\nCPU: %f%%\n", last.Starved, last.Current)
 	}
 
-	<-done // never called 🤡
+	done <- struct{}{} // never called 🤡
 }

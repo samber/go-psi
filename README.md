@@ -54,7 +54,7 @@ for {
 }
 
 // when you're done, just stop the notifier
-<-done
+done <- struct{}{}
 ```
 
 ### Get PSI starvation alerts
@@ -64,13 +64,14 @@ import "github.com/samber/go-psi"
 
 // Alert starts when CPU 10s average go further 90% and stops when CPU goes below 70%.
 onAlert, done, err := psi.NotifyStarvation(psi.CPU, psi.Avg10, 70, 90)
+
 for {
     alert, _ := <-onAlert
     fmt.Printf("\nALERT %t\nCPU: %f%%\n", alert.Starved, alert.Current)
 }
 
 // when you're done, just stop the notifier
-<-done
+done <- struct{}{}
 ```
 
 ## 🤝 Contributing
