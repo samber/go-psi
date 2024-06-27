@@ -31,6 +31,7 @@ func Notify(resource Resource) (<-chan PSIStats, chan<- struct{}, error) {
 			case <-ticker.C:
 				current, err := PSIStatsForResource(resource)
 				if err != nil {
+					// bearer:disable go_lang_logger_leak
 					log.Println(err.Error())
 					continue
 				}

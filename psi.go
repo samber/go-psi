@@ -86,6 +86,11 @@ func parsePSIStats(resource Resource, r io.Reader) (PSIStats, error) {
 func ReadFileNoStat(filename string) ([]byte, error) {
 	const maxBufferSize = 1024 * 1024
 
+	if !strings.HasPrefix(filename, "/proc/") {
+		return nil, fmt.Errorf("file %q is not in /proc", filename)
+	}
+
+	// bearer:disable go_gosec_filesystem_filereadtaint
 	f, err := os.Open(filename)
 	if err != nil {
 		return nil, err

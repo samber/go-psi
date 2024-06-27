@@ -76,7 +76,7 @@ done <- struct{}{}
 
 ## 🤝 Contributing
 
-- Ping me on twitter [@samuelberthe](https://twitter.com/samuelberthe) (DMs, mentions, whatever :))
+- Ping me on Twitter [@samuelberthe](https://twitter.com/samuelberthe) (DMs, mentions, whatever :))
 - Fork the [project](https://github.com/samber/go-psi)
 - Fix [open issues](https://github.com/samber/go-psi/issues) or request new features
 
