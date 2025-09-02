@@ -95,7 +95,7 @@ func ReadFileNoStat(filename string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer f.Close()
+	defer f.Close() //nolint:errcheck
 
 	reader := io.LimitReader(f, maxBufferSize)
 	return io.ReadAll(reader)
